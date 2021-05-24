@@ -4,7 +4,6 @@ module Concerns::Pagination
       extend ClassMethods
     end
   end
-
   module ClassMethods
     def paginate(params)
       params[:page].to_i > 1 ? offset = params[:page].to_i : offset = 1
