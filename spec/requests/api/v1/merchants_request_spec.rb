@@ -27,6 +27,17 @@ describe 'Merchant API' do
   end
 
   it 'get all items for a given merchant ID' do
+    merchant = create(:merchant)
+    create_list(:item, 10, merchant: merchant)
 
+    get "/api/v1/merchants/#{merchant.id}/items"
+
+    expect(response).to be_successful
+
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    expect(json[:data].size).to eq(10)
+    expect(json[:data].first[:attributes][:name]).to eq('item 1')
+    expect(json[:data].last[:attributes][:name]).to eq('item 10')
   end
 end
