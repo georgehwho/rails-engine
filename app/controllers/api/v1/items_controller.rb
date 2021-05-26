@@ -27,6 +27,11 @@ class Api::V1::ItemsController < ApplicationController
     @item.destroy
   end
 
+  def find_all
+    items = Item.search(params[:name])
+    render json: ItemSerializer.new(items)
+  end
+
   private
 
   def item_params

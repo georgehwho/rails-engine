@@ -81,4 +81,18 @@ describe 'Item API' do
       expect(json[:data][:id]).to eq(merchant.id.to_s)
     end
   end
+
+  context 'finds all items given a search by name' do
+    it 'finds all items after a search' do
+      create_list(:item, 5, merchant: merchant, name: 'asdf')
+      create(:item, merchant: merchant)
+
+      get "/api/v1/items/find_all?name=asdf"
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(json[:data].size).to eq(5)
+      expect(json[:data].first[:attributes][:name]).to eq('asdf')
+    end
+  end
 end
