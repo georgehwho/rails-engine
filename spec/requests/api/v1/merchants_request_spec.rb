@@ -40,4 +40,15 @@ describe 'Merchant API' do
     expect(json[:data].first[:attributes][:name]).to eq(Item.first.name)
     expect(json[:data].last[:attributes][:name]).to eq(Item.last.name)
   end
+
+  context 'finding a merchant' do
+    it 'happy path: it finds a merchant' do
+      merchant = create(:merchant, name: 'ooga')
+      get "/api/v1/merchants/find?name=oo"
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(json[:data][:attributes][:name]).to eq('ooga')
+    end
+  end
 end
