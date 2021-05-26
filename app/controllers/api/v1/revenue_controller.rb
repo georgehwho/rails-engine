@@ -8,4 +8,13 @@ class Api::V1::RevenueController < ApplicationController
     merchant = Merchant.find(params[:id]).merchant_revenue
     render json: MerchantRevenueSerializer.new(merchant)
   end
+
+  def items_revenue
+    if params[:quantity]
+      items = Item.items_revenue.limit(params[:quantity].to_i)
+    else
+      items = Item.items_revenue.limit(10)
+    end
+    render json: ItemRevenueSerializer.new(items)
+  end
 end
