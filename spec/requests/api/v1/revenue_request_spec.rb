@@ -116,5 +116,11 @@ describe 'Revenue API' do
       expect(merchant[:data].first[:attributes][:revenue]).to eq(3.0)
       expect(merchant[:data].last[:attributes][:revenue]).to eq(2.0)
     end
+
+    it 'returns error if quantity is blank' do
+      get '/api/v1/revenue/items?quantity= '
+
+      expect(response).to have_http_status(400)
+    end
   end
 end
