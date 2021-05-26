@@ -23,6 +23,10 @@ describe 'Revenue API' do
       invoice_item_2 = create(:invoice_item, item: item_2, invoice: invoice_2, unit_price: 2)
       invoice_item_3 = create(:invoice_item, item: item_3, invoice: invoice_3, unit_price: 3)
 
+      tranaction_1 = create(:transaction, invoice: invoice_1)
+      tranaction_2 = create(:transaction, invoice: invoice_2)
+      tranaction_3 = create(:transaction, invoice: invoice_3)
+
       get "/api/v1/revenue/merchants?quantity=2"
       merchants = JSON.parse(response.body, symbolize_names: true)
 
@@ -54,6 +58,10 @@ describe 'Revenue API' do
       invoice_item_2 = create(:invoice_item, item: item_2, invoice: invoice_2, unit_price: 2)
       invoice_item_3 = create(:invoice_item, item: item_3, invoice: invoice_3, unit_price: 3)
 
+      tranaction_1 = create(:transaction, invoice: invoice_1)
+      tranaction_2 = create(:transaction, invoice: invoice_2)
+      tranaction_3 = create(:transaction, invoice: invoice_3)
+
       get "/api/v1/revenue/merchants/#{merchant_1.id}"
       merchant = JSON.parse(response.body, symbolize_names: true)
 
@@ -83,6 +91,10 @@ describe 'Revenue API' do
       @invoice_item_1 = create(:invoice_item, item: @item_1, invoice: @invoice_1, unit_price: 1)
       @invoice_item_2 = create(:invoice_item, item: @item_2, invoice: @invoice_2, unit_price: 2)
       @invoice_item_3 = create(:invoice_item, item: @item_3, invoice: @invoice_3, unit_price: 3)
+
+      @tranaction_1 = create(:transaction, invoice: @invoice_1)
+      @tranaction_2 = create(:transaction, invoice: @invoice_2)
+      @tranaction_3 = create(:transaction, invoice: @invoice_3)
     }
 
     it 'returns by default 10 ' do
