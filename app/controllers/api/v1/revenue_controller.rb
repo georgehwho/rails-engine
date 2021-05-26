@@ -1,5 +1,6 @@
 class Api::V1::RevenueController < ApplicationController
   def merchants_revenue
+    return render_search_error if params[:quantity].nil? || params[:quantity].to_i == 0
     merchants = Merchant.merchants_revenue.limit(params[:quantity].to_i)
     render json: MerchantNameRevenueSerializer.new(merchants)
   end
@@ -10,11 +11,14 @@ class Api::V1::RevenueController < ApplicationController
   end
 
   def items_revenue
-    if params[:quantity]
-      items = Item.items_revenue.limit(params[:quantity].to_i)
-    else
+    if params[:quantity].nil?
       items = Item.items_revenue.limit(10)
+      render json: ItemRevenueSerializer.new(items)
+    elsif params[:quantity] == '' || params[:quantity].to_i <= 0
+      return render_search_error
+    else
+      items = Item.items_revenue.limit(params[:quantity].to_i)
+      render json: ItemRevenueSerializer.new(items)
     end
-    render json: ItemRevenueSerializer.new(items)
   end
 end

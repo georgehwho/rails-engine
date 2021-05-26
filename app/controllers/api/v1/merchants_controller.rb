@@ -11,6 +11,7 @@ class Api::V1::MerchantsController < ApplicationController
 
   def find
     merchants = Merchant.search(params[:name])
+    return render_search_error if merchants.empty?
     render json: MerchantSerializer.new(merchants.first)
   end
 end
