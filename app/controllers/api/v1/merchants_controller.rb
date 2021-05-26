@@ -14,4 +14,10 @@ class Api::V1::MerchantsController < ApplicationController
     return render_search_error if merchants.empty?
     render json: MerchantSerializer.new(merchants.first)
   end
+
+  def most_items
+    merchants = Merchant.most_items.limit(params[:quantity])
+    return render_search_error if merchants.empty? || params[:quantity].nil?
+    render json: ItemsSoldSerializer.new(merchants)
+  end
 end
