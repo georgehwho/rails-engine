@@ -37,7 +37,7 @@ describe 'Merchant API' do
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(json[:data].size).to eq(10)
-    expect(json[:data].first[:attributes][:name]).to eq('item 1')
-    expect(json[:data].last[:attributes][:name]).to eq('item 10')
+    expect(json[:data].first[:attributes][:name]).to eq(Item.first.name)
+    expect(json[:data].last[:attributes][:name]).to eq(Item.last.name)
   end
 end
